@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>云门矿难沉默录</title>
+<link rel="stylesheet" href="style.css?v=20260914-direct-npc">
+</head>
+<body>
+
+<div id="desktop">
+
+  <!-- 顶部状态栏 -->
+  <div id="topbar">
+    <div class="topbar-left"><button id="restart-game" type="button">↻ 重新开始</button><span id="clock">调查中...</span></div>
+    <span id="case-title">云门矿难沉默录</span>
+    <span id="story-date">2023年10月23日 · 星期一</span>
+  </div>
+
+  <!-- ============ 邮箱 App ============ -->
+  <div class="app-window" id="app-mail">
+    <div class="window-header mail-window-header">
+      <span class="mail-app-mark">✉️</span>
+      <span>方圆邮箱</span>
+      <span class="mail-account-top">shenzhixing@fangyuanweekly.com</span>
+    </div>
+    <div class="mail-toolbar">
+      <div class="mail-toolbar-brand"><strong>Mail</strong><span>方圆周刊内部邮件系统</span></div>
+      <div class="mail-tools">
+        <button id="mail-refresh" title="刷新邮件">↻</button>
+        <label class="mail-search"><span>⌕</span><input id="mail-search-input" type="text" placeholder="搜索邮件"></label>
+      </div>
+    </div>
+    <div class="mail-body">
+      <aside class="mail-sidebar">
+        <button class="mail-compose">＋ 写邮件</button>
+        <div class="mail-folder active"><span class="folder-icon">▰</span>收件箱 <b id="mail-unread-count">1</b></div>
+        <div class="mail-folder"><span class="folder-icon">☆</span>星标邮件</div>
+        <div class="mail-folder"><span class="folder-icon">⌁</span>已发送</div>
+        <div class="mail-folder"><span class="folder-icon">▤</span>草稿箱</div>
+        <div class="mail-folder"><span class="folder-icon">⌫</span>已删除</div>
+        <div class="mail-folder-divider"></div>
+        <div class="mail-folder-label">标签</div>
+        <div class="mail-label"><i class="label-dot work"></i>编辑部</div>
+        <div class="mail-label"><i class="label-dot case"></i>调查线索</div>
+        <div class="mail-storage"><span>邮箱容量</span><div><i></i></div><small>0.7 GB / 10 GB</small></div>
+      </aside>
+      <section class="mail-inbox-panel">
+        <div class="mail-list-head"><div><strong>收件箱</strong><span>按时间排序⌄</span></div><small id="mail-count-label">3 封邮件</small></div>
+        <div class="mail-list" id="mail-list">
+          <div class="mail-item read" data-mail="notice1">
+            <div class="mail-avatar notice">编</div>
+            <div class="mail-summary"><div class="mail-row"><div class="mail-from">编辑部通知</div><div class="mail-time">昨天 18:02</div></div>
+            <div class="mail-subject">下周三选题会，请提前提交选题</div><div class="mail-preview">各位老师：下周三召开本月第二次选题会……</div></div>
+          </div>
+          <div class="mail-item read" data-mail="notice2">
+            <div class="mail-avatar finance">财</div>
+            <div class="mail-summary"><div class="mail-row"><div class="mail-from">财务部</div><div class="mail-time">昨天 09:15</div></div>
+            <div class="mail-subject">3月差旅报销提醒</div><div class="mail-preview">3月份差旅报销将于本月25日截止……</div></div>
+          </div>
+          <div class="mail-item unread" data-mail="tip">
+            <div class="mail-avatar anonymous">匿</div>
+            <div class="mail-summary"><div class="mail-row"><div class="mail-from">jm_2003********@163.com</div><div class="mail-time">今天 04:47</div></div>
+            <div class="mail-subject">【无主题】 <span class="attachment-mark">⌕</span></div><div class="mail-preview">我知道的事情说出来会死人的，但是不说我良心过不去……</div></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="mail-detail" id="mail-detail">
+        <div class="mail-placeholder"><div class="mail-placeholder-icon">✉️</div><strong>选择一封邮件开始阅读</strong><span>邮件内容将在这里显示</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 搜索引擎 App（云搜） ============ -->
+  <div class="app-window hidden" id="app-search">
+    <div class="window-header"><span>云搜</span></div>
+    <div class="search-body">
+      <div class="search-logo">云搜</div>
+      <div class="search-box-row">
+        <input type="text" id="search-input" placeholder="搜索地点、新闻、人名...">
+        <button id="search-btn">搜索</button>
+      </div>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+
+  <!-- ============ 独立网页（法院 / 地方论坛） ============ -->
+  <div class="app-window hidden" id="app-webpage">
+    <div class="window-header"><span id="webpage-window-title">网页</span></div>
+    <div class="standalone-web-body" id="standalone-web-body"></div>
+  </div>
+
+  <!-- ============ 新闻门户 App（云门在线） ============ -->
+  <div class="app-window hidden" id="app-portal">
+    <div class="window-header"><span class="portal-nav-home" id="portal-title-home">云门在线 · 云门县本地新闻门户</span></div>
+    <div class="portal-body" id="portal-body">
+      <div class="portal-site-head">
+        <div class="portal-brand portal-nav-home" id="portal-brand-home">云门在线<small>YUNMEN ONLINE</small></div>
+        <div class="portal-site-slogan">云门人自己的网上家园</div>
+        <div class="portal-site-date">立足本地 · 服务百姓</div>
+      </div>
+      <div class="portal-nav"><span class="portal-nav-home" id="portal-nav-home">网站首页</span><span>云门要闻</span><span>政务动态</span><span>民生热线</span><span>乡镇传真</span><span>公示公告</span><span>便民服务</span></div>
+
+      <div id="portal-home-content">
+        <div class="portal-banner" id="portal-banner">
+          <div class="banner-graphic" role="img" aria-label="云门县城与群山全景"></div>
+          <div class="banner-text">
+            <div class="banner-kicker">县情概览</div>
+            <div class="banner-title">走进云门</div>
+            <p>云门县地处岱州市东北部山区，因境内群山环抱、云雾常年缭绕山口而得名，全县辖8镇6乡，常住人口约21万。境内矿产资源丰富，尤以铁矿储量最为可观，矿业曾长期是当地重要的支柱产业。近年来，县政府持续推进矿山安全生产专项整治与生态修复工作，努力实现资源型县域的转型发展。</p>
+          </div>
+        </div>
+
+        <div class="portal-search-row">
+          <span>站内检索：</span>
+          <input type="text" id="portal-search-input" placeholder="请输入新闻关键词">
+          <button id="portal-search-btn">搜 索</button>
+        </div>
+        <div class="portal-home-grid">
+          <main class="portal-list" id="portal-list"></main>
+          <aside class="portal-sidebar">
+            <div class="portal-side-title">网站公告</div>
+            <p>欢迎访问云门在线。本站发布云门县本地新闻、政务信息及便民资讯。</p>
+            <div class="portal-side-title">便民查询</div>
+            <ul><li>今日天气与道路情况</li><li>政务服务电话</li><li>客运班次查询</li><li>停水停电通知</li></ul>
+            <div class="portal-side-title">责任编辑</div>
+            <p>新闻热线：035x-xxxxxxx<br>值班编辑：云门在线编辑部</p>
+          </aside>
+        </div>
+      </div>
+      <div class="portal-detail hidden" id="portal-detail"></div>
+    </div>
+  </div>
+
+  <!-- ============ 地图 App ============ -->
+  <div class="app-window hidden" id="app-map">
+    <div class="window-header"><span>地图</span></div>
+    <div class="map-body">
+      <div id="map-content">
+        <svg viewBox="0 0 800 460" id="map-svg" aria-label="云门县与江源县区域地图">
+          <g class="region-group">
+            <path class="region" id="region-yunmen" d="M75 92 C91 78 99 68 113 64 C129 60 143 72 158 67 C173 62 182 50 196 54 C211 58 219 66 234 62 C249 58 260 51 274 58 C290 65 300 78 316 75 C333 72 345 78 358 91 C370 103 368 115 359 128 C351 140 359 148 369 161 C377 172 368 185 356 195 C343 205 329 200 317 210 C306 220 301 230 286 230 C271 230 258 218 244 222 C230 227 224 238 208 234 C193 230 186 219 171 222 C155 226 145 234 132 226 C119 218 113 207 98 210 C82 213 70 205 65 190 C60 176 74 163 70 151 C67 141 54 134 55 122 C56 109 66 101 75 92 Z"/>
+            <text x="211" y="132" text-anchor="middle" class="region-label"><tspan x="211" class="region-parent">岱州市</tspan><tspan x="211" dy="28" class="region-name">云门县</tspan></text>
+          </g>
+
+          <g class="region-group">
+            <path class="region" id="region-jiangyuan" d="M405 229 C418 217 426 207 439 203 C453 199 465 211 478 208 C492 205 499 187 511 184 C525 181 536 199 550 198 C564 197 574 184 586 186 C600 188 605 208 616 210 C630 213 644 207 654 214 C666 222 676 235 675 248 C674 260 666 270 674 280 C683 290 696 295 695 307 C694 320 682 329 669 332 C655 335 646 338 639 349 C631 362 627 370 613 371 C599 372 590 363 578 369 C565 376 558 393 544 392 C531 391 521 378 507 381 C493 384 485 392 472 386 C459 380 454 367 441 367 C426 368 415 367 407 355 C399 344 407 330 405 318 C403 305 388 295 387 283 C386 270 400 262 401 251 C402 242 394 237 405 229 Z"/>
+            <text x="539" y="276" text-anchor="middle" class="region-label"><tspan x="539" class="region-parent">宁越市</tspan><tspan x="539" dy="28" class="region-name">江源县</tspan></text>
+          </g>
+        </svg>
+        <div class="map-hint" id="map-hint">地图尚未加载任何区域，请通过搜索引擎定位地点。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 村庄走访 App ============ -->
+  <div class="app-window hidden" id="app-village">
+    <div class="window-header"><span id="village-title">走访</span></div>
+    <div class="village-body" id="village-body"></div>
+  </div>
+
+  <!-- ============ 通讯录 App ============ -->
+  <div class="app-window hidden" id="app-contacts">
+    <div class="window-header"><span>通讯录</span></div>
+    <div class="contacts-body" id="contacts-body">
+      <div class="evidence-empty">暂无联系人</div>
+    </div>
+  </div>
+
+  <!-- ============ 证据夹 App ============ -->
+  <div class="app-window hidden" id="app-evidence">
+    <div class="window-header"><span>证据夹</span></div>
+    <div class="evidence-body" id="evidence-list">
+      <div class="evidence-empty">暂无证据</div>
+    </div>
+  </div>
+
+  <!-- ============ Dock ============ -->
+  <div id="dock">
+    <div class="dock-icon active" data-app="app-mail">
+      <div class="icon mail-icon"><b class="dock-unread-badge" id="mail-dock-unread" aria-label="未读邮件">1</b></div><span>邮箱</span>
+    </div>
+    <div class="dock-icon locked" data-app="app-search" id="dock-search">
+      <div class="icon search-icon"></div><span>搜索引擎</span>
+    </div>
+    <div class="dock-icon locked" data-app="app-map" id="dock-map">
+      <div class="icon map-icon"></div><span>地图</span>
+    </div>
+    <div class="dock-icon locked" data-app="app-contacts" id="dock-contacts">
+      <div class="icon contacts-icon"></div><span>通讯录</span>
+    </div>
+    <div class="dock-icon locked" data-app="app-evidence" id="dock-evidence">
+      <div class="icon evidence-icon"></div><span>证据夹</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ 游戏开场 ============ -->
+<div id="start-screen">
+  <div class="start-atmosphere"></div>
+  <main class="start-card">
+    <div class="start-publication">方圆周刊 · 调查部</div>
+    <div class="start-rule"></div>
+    <h1>云门矿难沉默录</h1>
+    <p class="start-subtitle">一封匿名邮件，十四个名字，以及一座习惯沉默的矿山。</p>
+    <div class="start-brief">
+      <span>2023年10月23日　星期一　06:52</span>
+      <p>你是《方圆周刊》调查记者<strong>沈知行</strong>。今天凌晨，一封没有主题的邮件进入工作邮箱。发件人没有留下姓名，只附上了一份来历不明的名单。</p>
+      <p>名单提到的是一座早已停产的铁矿。那些名字、年份和潦草的事故备注，似乎从未出现在任何正式报道里。</p>
+      <p>从邮件开始，核对每一个名字，找到那些被地方新闻遗漏的人。</p>
+    </div>
+    <section class="start-guide">
+      <div class="start-guide-title">调查提示</div>
+      <div class="guide-grid">
+        <div><b>01</b><strong>阅读与搜索</strong><span>邮件、附件和网页中的词语，可能是下一次搜索的关键词。</span></div>
+        <div><b>02</b><strong>追踪证据</strong><span>重要信息会自动收入证据夹，点击证据可以返回它的来源。</span></div>
+        <div><b>03</b><strong>实地走访</strong><span>地图会随调查逐步更新；和人物交谈时，点击继续推进对话。</span></div>
+      </div>
+    </section>
+    <button id="start-game">进入邮箱 <span>→</span></button>
+    <div class="start-note">本作涉及矿难、死亡与事故瞒报等沉重内容。请根据自身情况体验。</div>
+  </main>
+</div>
+
+<!-- ============ 附件查看弹窗（名单PDF） ============ -->
+<div id="pdf-modal" class="modal hidden">
+  <div class="modal-mask"></div>
+  <div class="pdf-viewer">
+    <div class="pdf-close" id="pdf-close">✕</div>
+    <div class="pdf-page damaged-list-page">
+      <i class="ink-drop ink-one" aria-hidden="true"></i>
+      <i class="ink-drop ink-two" aria-hidden="true"></i>
+      <i class="ink-drop ink-three" aria-hidden="true"></i>
+      <i class="ink-drop ink-four" aria-hidden="true"></i>
+      <div class="pdf-title">恒源矿难亡者（部分）</div>
+      <div class="pdf-subtitle">涉事矿山：恒源矿业有限责任公司（注册地：岱州市云门县）</div>
+      <table class="pdf-table">
+        <thead><tr><th>序号</th><th>姓名</th><th>籍贯（村/乡/县）</th><th>大致年份</th><th>备注</th></tr></thead>
+        <tbody id="pdf-table-body"></tbody>
+      </table>
+      <div class="pdf-note">原件多处受潮并沾有墨渍，部分籍贯只能从不同登记残片中相互印证。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 论坛登录弹窗 ============ -->
+<div id="login-modal" class="modal hidden">
+  <div class="modal-mask"></div>
+  <div class="login-box">
+    <div class="pdf-close" id="login-close">✕</div>
+    <div class="login-title">会员登录</div>
+    <div class="login-sub">云门在线 · 用户中心</div>
+    <div class="login-field">
+      <label>用户名</label>
+      <input type="text" id="login-username" autocomplete="off">
+    </div>
+    <div class="login-field">
+      <label>密码</label>
+      <input type="password" id="login-password" autocomplete="off">
+    </div>
+    <div class="login-hint">ⓘ 忘记密码？本站默认密码为您<strong>注册当天的日期</strong>（格式：YYYYMMDD）</div>
+    <div class="login-error hidden" id="login-error">用户名或密码错误，请重试。</div>
+    <button class="login-submit" id="login-submit">登录</button>
+  </div>
+</div>
+
+<!-- ============ 对话弹窗 ============ -->
+<div id="dialogue-modal" class="modal hidden">
+  <div class="modal-mask"></div>
+  <div class="dialogue-box">
+    <div class="dialogue-stage-bg" id="dialogue-stage-bg"></div>
+    <div class="dialogue-stage-vignette"></div>
+    <div class="dialogue-character" id="dialogue-character"></div>
+    <div class="pdf-close" id="dialogue-close">✕</div>
+    <div class="dialogue-speaker" id="dialogue-speaker">叙述</div>
+    <div class="dialogue-text" id="dialogue-text"></div>
+    <div class="dialogue-footer">
+      <span class="dialogue-progress" id="dialogue-progress"></span>
+      <button class="dialogue-next" id="dialogue-next">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 密码锁弹窗 ============ -->
+<div id="combo-modal" class="modal hidden">
+  <div class="modal-mask"></div>
+  <div class="login-box">
+    <div class="pdf-close" id="combo-close">✕</div>
+    <div class="login-title">密码锁</div>
+    <div class="login-sub">一个老式4位数字密码锁</div>
+    <div class="login-field">
+      <label>输入密码</label>
+      <input type="text" id="combo-input" maxlength="4" inputmode="numeric" autocomplete="off">
+    </div>
+    <div class="login-error hidden" id="combo-error"></div>
+    <button class="login-submit" id="combo-submit">拨开</button>
+  </div>
+</div>
+
+<!-- ============ 加密附件密码弹窗 ============ -->
+<div id="judgment-modal" class="modal hidden">
+  <div class="modal-mask"></div>
+  <div class="login-box">
+    <div class="pdf-close" id="judgment-close">✕</div>
+    <div class="login-title">文件已加密</div>
+    <div class="login-sub">邱满仓案二审判决书（全文）.pdf</div>
+    <div class="login-field">
+      <label>输入密码</label>
+      <input type="text" id="judgment-password" autocomplete="off">
+    </div>
+    <div class="login-error hidden" id="judgment-error">密码错误，请重试。</div>
+    <button class="login-submit" id="judgment-submit">解锁</button>
+  </div>
+</div>
+
+<!-- ============ 文书/照片查看弹窗（通用） ============ -->
+<div id="doc-modal" class="modal hidden">
+  <div class="modal-mask"></div>
+  <div class="pdf-viewer">
+    <div class="pdf-close" id="doc-close">✕</div>
+    <div class="pdf-page" id="doc-modal-body"></div>
+  </div>
+</div>
+
+<!-- ============ 终章 / 后记 ============ -->
+<div id="ending-overlay" class="modal hidden">
+  <div class="modal-mask"></div>
+  <div class="ending-box">
+    <div id="ending-content"></div>
+  </div>
+</div>
+
+<!-- ============ 提示条 ============ -->
+<div id="toast"></div>
+
+<script src="script.js?v=20260914-map-flow"></script>
+</body>
+</html>
